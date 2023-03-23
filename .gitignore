@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+output/
 develop-eggs/
 dist/
 downloads/
@@ -23,6 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.csv
 MANIFEST
 
 # PyInstaller
