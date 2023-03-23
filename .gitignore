@@ -10,6 +10,7 @@ __pycache__/
 .Python
 build/
 output/
+pretrained_models/
 develop-eggs/
 dist/
 downloads/
