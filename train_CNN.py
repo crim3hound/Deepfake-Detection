@@ -12,6 +12,8 @@ from network.models import model_selection
 from network.mesonet import Meso4, MesoInception4
 from dataset.transform import xception_default_data_transforms
 from dataset.mydataset import MyDataset
+
+
 def main():
 	args = parse.parse_args()
 	name = args.name
@@ -90,13 +92,11 @@ def main():
 				best_acc = epoch_acc
 				best_model_wts = model.state_dict()
 		scheduler.step()
-		#if not (epoch % 40):
+		# if not (epoch % 40):
 		torch.save(model.module.state_dict(), os.path.join(output_path, str(epoch) + '_' + model_name))
 	print('Best val Acc: {:.4f}'.format(best_acc))
 	model.load_state_dict(best_model_wts)
 	torch.save(model.module.state_dict(), os.path.join(output_path, "best.pkl"))
-
-
 
 
 if __name__ == '__main__':

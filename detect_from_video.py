@@ -76,8 +76,7 @@ def preprocess_image(image, cuda=True):
     return preprocessed_image
 
 
-def predict_with_model(image, model, post_function=nn.Softmax(dim=1),
-                       cuda=True):
+def predict_with_model(image, model, post_function=nn.Softmax(dim=1), cuda=True):
     """
     Predicts the label of an input image. Preprocesses the input image and
     casts it to cuda if required
@@ -102,8 +101,7 @@ def predict_with_model(image, model, post_function=nn.Softmax(dim=1),
     return int(prediction), output
 
 
-def test_full_image_network(video_path, model_path, output_path,
-                            start_frame=0, end_frame=None, cuda=True):
+def test_full_image_network(video_path, model_path, output_path, start_frame=0, end_frame=None, cuda=True):
     """
     Reads a video and evaluates a subset of frames with the a detection network
     that takes in a full frame. Outputs are only given if a face is present
@@ -133,7 +131,7 @@ def test_full_image_network(video_path, model_path, output_path,
 
     # Load model
     model = model_selection(modelname='xception', num_out_classes=2, dropout=0.5)
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     if isinstance(model, torch.nn.DataParallel):
         model = model.module
     if cuda:
@@ -181,8 +179,7 @@ def test_full_image_network(video_path, model_path, output_path,
             cropped_face = image[y:y+size, x:x+size]
 
             # Actual prediction using our model
-            prediction, output = predict_with_model(cropped_face, model,
-                                                    cuda=cuda)
+            prediction, output = predict_with_model(cropped_face, model, cuda=cuda)
             # ------------------------------------------------------------------
 
             # Text and bb
